@@ -1,20 +1,11 @@
 /**
- * A Sonoff Basic swithing a lamp
+ * A Sonoff Basic switching a lamp
  */
 function start() {
   const wifi = require('Wifi');
   const net = require('net');
   const MqttClient = require('https://github.com/rovale/micro-mqtt/blob/master/espruino/modules/micro-mqtt.js').Client;
-
-  const settings = {
-    ssid: 'myssid',
-    wifiPassword: 'mypassword',
-    mqttHost: 'iot.eclipse.org',
-    mqttUsername: null,
-    mqttPassword: null,
-    topic: 'mybuilding/mylocation/',
-    id: getSerial().replace('-', '').toUpperCase()
-  };
+  const settings = require('http://localhost:5000/shared.js').settings;
 
   const getTopic = subject => `${settings.topic}${settings.id}/${subject}`;
 
@@ -34,10 +25,11 @@ function start() {
     net
   );
 
+  const buttonPin = D0;
+  const relaisPin = D12;
+  let isTurnedOn = false;
   const ledPin = D13;
   const ledOnValue = false;
-
-  const relaisPin = D12;
 
   let telemetryInterval = -1;
   let blinkInterval = -1;
@@ -73,10 +65,11 @@ function start() {
     connect();
   });
 
-  const sendTelemery = () => {
+  const sendTelemetry = () => {
     const telemetry = {
       freeMemory: process.memory().free,
-      rssi: wifi.getDetails().rssi
+      rssi: wifi.getDetails().rssi,
+      isTurnedOn: isTurnedOn
     };
 
     mqttClient.publish(getTopic('telemetry'), JSON.stringify(telemetry), 1);
@@ -96,9 +89,28 @@ function start() {
     }
   };
 
-  const turnOn = () => digitalWrite(relaisPin, true);
+  const switchRelais = (newValue) => {
+    if (newValue !== isTurnedOn) {
+      isTurnedOn = newValue;
+      digitalWrite(relaisPin, isTurnedOn);
+      sendTelemetry();
+    }
+  };
 
-  const turnOff = () => digitalWrite(relaisPin, false);
+  const turnOn = () => {
+    print('turnOn');
+    switchRelais(true);
+  };
+
+  const turnOff = () => {
+    print('turnOff');
+    switchRelais(false);
+  };
+
+  const toggle = () => {
+    print('toggle');
+    switchRelais(!isTurnedOn);
+  };
 
   mqttClient.on('connected', () => {
     digitalWrite(ledPin, !ledOnValue);
@@ -118,8 +130,8 @@ function start() {
       true
     );
 
-    telemetryInterval = setInterval(() => sendTelemery(), 30 * 1000);
-    sendTelemery();
+    telemetryInterval = setInterval(() => sendTelemetry(), 30 * 1000);
+    sendTelemetry();
   });
 
   mqttClient.on('disconnected', () => {
@@ -138,6 +150,7 @@ function start() {
     if (command.name === 'blinkOff') blinkOff();
     if (command.name === 'turnOn') turnOn();
     if (command.name === 'turnOff') turnOff();
+    if (command.name === 'toggle') toggle();
   });
 
   // mqttClient.on("debug", debug => {
@@ -153,6 +166,8 @@ function start() {
   });
 
   connect();
+
+  setWatch(() => toggle(), buttonPin, { repeat: true, edge: 'falling', debounce: 100 });
 
   global.settings = settings;
   global.wifi = wifi;

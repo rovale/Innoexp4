@@ -8,12 +8,13 @@ function start() {
   const MqttClient = require('https://github.com/rovale/micro-mqtt/blob/master/espruino/modules/micro-mqtt.js').Client;
   const settings = require('http://localhost:5000/shared.js').settings;
 
-  const details = {
+  const getStatusMessage = isOnline => ({
     id: settings.id,
     name: 'AnalogInputAndOutput-ESP-12E',
+    online: isOnline,
     network: settings.ssid,
-    ip: wifi.getIP().ip
-  };
+    ip: wifi.getIP().ip,
+  });
 
   const getTopic = subject => `${settings.topic}${settings.id}/${subject}`;
 
@@ -25,7 +26,7 @@ function start() {
       password: settings.mqttPassword,
       will: {
         topic: getTopic('status'),
-        message: 'offline',
+        message: JSON.stringify(getStatusMessage(false)),
         qos: 1,
         retain: true
       }
@@ -109,7 +110,7 @@ function start() {
   const autoDimOn = () => {
     if (autoDimInterval === -1) {
       autoDimInterval = setInterval(() => {
-        print(analogRead(sensorPin));
+        // print(analogRead(sensorPin));
         analogWrite(dimmableLedPin, 1 - analogRead(sensorPin));
       }, 500);
     }
@@ -131,11 +132,10 @@ function start() {
   mqttClient.on('connected', () => {
     switchOnBoardLed(!onBoardLedOnValue);
     mqttClient.subscribe(getTopic('command'), 1);
-    mqttClient.publish(getTopic('status'), 'online', 1, true);
 
     mqttClient.publish(
-      getTopic('details'),
-      JSON.stringify(details),
+      getTopic('status'),
+      JSON.stringify(getStatusMessage(true)),
       1,
       true
     );

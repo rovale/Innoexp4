@@ -48,3 +48,8 @@ Demonstrates the usage of analog inputs (a photo resistor = light sensor) and ou
 About the ESP-12E
 - Based on [ESP8266](https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf).
 - Exposes all pins of the ESP8266, see [pinout](./pinouts/ESP-12E).
+  
+---
+### Notes to self:
+- [ ] Alternative for uploading: https://www.npmjs.com/package/espruino
+- [ ] `analogWrite(D5, 0.5, { freq : 1 })` also blinks an LED.

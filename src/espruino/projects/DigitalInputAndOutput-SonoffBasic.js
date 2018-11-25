@@ -1,11 +1,18 @@
 /**
- * A Sonoff Basic switching a lamp
+ * A Sonoff Basic switching a lamp. Example of digital input and output.
  */
 function start() {
   const wifi = require('Wifi');
   const net = require('net');
   const MqttClient = require('https://github.com/rovale/micro-mqtt/blob/master/espruino/modules/micro-mqtt.js').Client;
   const settings = require('http://localhost:5000/shared.js').settings;
+
+  const details = {
+    id: settings.id,
+    name: 'DigitalInputAndOutput-SonoffBasic',
+    network: settings.ssid,
+    ip: wifi.getIP().ip,
+  };
 
   const getTopic = subject => `${settings.topic}${settings.id}/${subject}`;
 
@@ -26,17 +33,26 @@ function start() {
   );
 
   const buttonPin = D0;
-  const relaisPin = D12;
+  const relayPin = D12;
   let isTurnedOn = false;
-  const ledPin = D13;
-  const ledOnValue = false;
+
+  const onBoardLedPin = D13;
+  const onBoardLedOnValue = false;
+  let onBoardLedValue = !onBoardLedOnValue;
 
   let telemetryInterval = -1;
   let blinkInterval = -1;
 
+  const switchOnBoardLed = (newValue) => {
+    if (newValue !== onBoardLedValue) {
+      onBoardLedValue = newValue;
+      digitalWrite(onBoardLedPin, onBoardLedValue);
+    }
+  };
+
   const onWifiConnecting = () => {
     print('[Wifi] [Info] Connecting...');
-    digitalWrite(ledPin, ledOnValue);
+    switchOnBoardLed(onBoardLedOnValue);
   };
 
   const onWifiConnected = () => {
@@ -77,51 +93,45 @@ function start() {
 
   const blinkOn = () => {
     if (blinkInterval === -1) {
-      blinkInterval = setInterval(() => digitalWrite(ledPin, !digitalRead(ledPin)), 500);
+      blinkInterval = setInterval(() => switchOnBoardLed(!onBoardLedValue), 500);
     }
   };
 
   const blinkOff = () => {
     if (blinkInterval !== -1) {
       clearInterval(blinkInterval);
-      digitalWrite(ledPin, !ledOnValue);
+      switchOnBoardLed(!onBoardLedOnValue);
       blinkInterval = -1;
     }
   };
 
-  const switchRelais = (newValue) => {
+  const switchRelay = (newValue) => {
     if (newValue !== isTurnedOn) {
       isTurnedOn = newValue;
-      digitalWrite(relaisPin, isTurnedOn);
+      digitalWrite(relayPin, isTurnedOn);
       sendTelemetry();
     }
   };
 
   const turnOn = () => {
     print('turnOn');
-    switchRelais(true);
+    switchRelay(true);
   };
 
   const turnOff = () => {
     print('turnOff');
-    switchRelais(false);
+    switchRelay(false);
   };
 
   const toggle = () => {
     print('toggle');
-    switchRelais(!isTurnedOn);
+    switchRelay(!isTurnedOn);
   };
 
   mqttClient.on('connected', () => {
-    digitalWrite(ledPin, !ledOnValue);
+    switchOnBoardLed(!onBoardLedOnValue);
     mqttClient.subscribe(getTopic('command'), 1);
     mqttClient.publish(getTopic('status'), 'online', 1, true);
-
-    const details = {
-      name: 'Sonoff Basic Lamp',
-      network: settings.ssid,
-      ip: wifi.getIP().ip
-    };
 
     mqttClient.publish(
       getTopic('details'),
@@ -135,7 +145,7 @@ function start() {
   });
 
   mqttClient.on('disconnected', () => {
-    digitalWrite(ledPin, ledOnValue);
+    switchOnBoardLed(onBoardLedOnValue);
 
     if (telemetryInterval !== -1) {
       clearInterval(telemetryInterval);

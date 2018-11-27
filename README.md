@@ -51,5 +51,6 @@ About the ESP-12E
   
 ---
 ### Notes to self:
+- [ ] Error while uploading script: `Uncaught Error: Unable to find or create file` can be resoled by `require('Storage').eraseAll()`.
 - [ ] Alternative for uploading: https://www.npmjs.com/package/espruino
 - [ ] `analogWrite(D5, 0.5, { freq : 1 })` also blinks an LED.

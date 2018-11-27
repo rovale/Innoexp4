@@ -11,6 +11,7 @@
         "jest/globals": true
     },
     "rules": {
+        "no-plusplus": "off",
         "prefer-destructuring": "off",
         "object-shorthand": "off",
         "comma-dangle": "off",

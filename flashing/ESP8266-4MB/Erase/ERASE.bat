@@ -1,0 +1,1 @@
+c:\Python27\Scripts\esptool.py.exe --port COM7 --baud 115200 write_flash --flash_freq 80m --flash_mode qio --flash_size 4MB 0x000000 blank_1MB.bin 0x100000 blank_1MB.bin 0x200000 blank_1MB.bin 0x300000 blank_1MB.bin

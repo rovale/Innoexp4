@@ -5,6 +5,7 @@
 - Exposes all pins of the ESP32, see [pinout](./docs/pinouts/Widora%20Air).
 - Continuously rebooting after flashing Espruino on a brand new board can be resolved first flash something using Arduino, then Espruino.
 - The DAC pins do [not](TODO) work in Espruino.
+- https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
 
 
 ## Digital input and output with a Sonoff Basic

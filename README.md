@@ -1,10 +1,11 @@
 # Innoexp4 IoT
 ## Exploring sensors with the Widora Air
 ### About the Widora Air:
-- Based on [ESP32](TODO).
+- [Data sheet](http://wiki.widora.cn/_media/air-spec.pdf)
+- Based on [ESP32](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf).
 - Exposes all pins of the ESP32, see [pinout](./docs/pinouts/Widora%20Air).
 - Continuously rebooting after flashing Espruino on a brand new board can be resolved first flash something using Arduino, then Espruino.
-- The DAC pins do [not](TODO) work in Espruino.
+- The DAC pins do [not](http://forum.espruino.com/conversations/328147) work in Espruino.
 - https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
 
 
@@ -27,7 +28,7 @@ Demonstrates the usage of digital inputs ([button](https://www.espruino.com/Butt
 ```
 
 ### About the Sonoff Basic:
-- It is a [Wifi smart switch]( https://sonoff.itead.cc/en/products/sonoff/sonoff-basic).
+- It is a [Wifi smart switch](https://sonoff.itead.cc/en/products/sonoff/sonoff-basic).
 - Based on [ESP8266](https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf).
 - A hackable device, but does not expose all pins of the ESP8266, see [pinout](./docs/pinouts/Sonoff%20Basic)
 - https://randomnerdtutorials.com/how-to-flash-a-custom-firmware-to-sonoff/
@@ -67,6 +68,9 @@ About the ESP-12E
     - [ ] Add flows to store `telemetry`, `status`, and `command` messages.
       - [ ] Add a timestamp
   - [ ] I did a test to see if a switch could be connected using a long network cable. It works, but does it also work for more complex modules like the DHT-22 (temperature, humidity) or HC-SR04 (ultrasonic sound sensor)?
+    - http://www.home-automation-community.com/temperature-and-humidity-from-am2302-dht22-sensor-displayed-as-chart/
+    - https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf
+    -   https://www.tinytronics.nl/shop/nl/spanning-converters/level-converters/spi-i2c-uart-bi-directionele-logic-level-converter-4-kanaals
 
 ### Notes to self:
 #### Troubleshooting
@@ -78,3 +82,4 @@ About the ESP-12E
 #### Ideas
   - [ ] Alternative for uploading: https://www.npmjs.com/package/espruino
   - [ ] `analogWrite(D5, 0.5, { freq : 1 })` also blinks an LED.
+

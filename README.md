@@ -39,11 +39,12 @@ Highlights of the MQTT protocol:
   - QoS 1 - At least once
   - QoS 2 - Exactly once
 - Option to publish retained messages. The broker will always keep that message and send it when a scubcriber subscribes to the topic. We will use this for our status messages (`online`, `offline`).
-- It has a Last Will and Testament feature. When a client is ungracefully disconnected the server then the broker will send this message. We will use this to publish the status `offline`.
+- It has a Last Will and Testament feature. When a client is ungracefully disconnected from the server, then the broker will send this message. We will use this to publish the status `offline`.
 
 We will use the [mosquitto](https://mosquitto.org/) MQTT broker and we will install it on a [Raspberry Pi](https://www.raspberrypi.org/). 
 
-#### Suggested references
+### MQTTLens
+MQTTLens can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=nl). It can connect to a MQTT broker and is able to subscribe and publish to MQTT topics. We can use it to test the behaviour of our microcontrollers. I noticed it has a lay-out issue when the message payload is [JSON](https://en.wikipedia.org/wiki/JSON). Work around is making the window smaller. :-/
 
 ## Exploring sensors with the Widora Air
 ### About the Widora Air:

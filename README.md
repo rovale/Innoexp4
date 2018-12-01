@@ -16,6 +16,10 @@ The  things are there to stay and they will gather tons of data. We can use it t
 ### Sensors and actuators
 The primary focus is on installing [sensors](https://en.wikipedia.org/wiki/Sensor) to gather information about the restaurant. We may also want to add an [actuator](https://en.wikipedia.org/wiki/Actuator) here and there. It should be OK, as long as we don't disturb people during ther lunch break. Have a look at the descriptions of the available [sensors](./docs/Sensors.md) and [actuators](./docs/Sensors.md). And again: `primary focus === sensors`!
 
+#### Ideas
+- Next to the components we already have we can tinker with existing electronic devices to use their sensors and actuators!
+- We can also collect relevant data which is available on-line, like the weather data.
+
 ### Microcontrollers
 The sensors and actuators will be connected to [microcontrollers](https://en.wikipedia.org/wiki/Microcontroller). We will use boards with [ESP8266](https://en.wikipedia.org/wiki/ESP8266) and [ESP32](https://en.wikipedia.org/wiki/ESP32) microchips, from the company Espressif (https://www.espressif.com/). Feature of these chips, important for our project, is built-in WiFi. 
 
@@ -25,17 +29,24 @@ We will program the microcontrollers. There are many options to do that. Last ye
 Espruino (https://www.espruino.com/) is an open source [JavaScript](https://en.wikipedia.org/wiki/JavaScript) interpreter for microcontrollers. It is designed for devices with small amounts of RAM. Espruino has dedicated boards, and it also runs on the [ESP8266](https://www.espruino.com/EspruinoESP8266) and [ESP32](https://www.espruino.com/ESP32). The web site contains a lot of documentation. The creator of Espruino, Gordon Williams, is also very helpful in the [forums](http://forum.espruino.com/). Although not every feature of the ESP32 is fully supported, for our goal Espruino seems to be a good fit. To get started with Espruino you first need to flash the Espruino firmware on the board. I already did this for most of our boards. When the firmware is in place, the Espruino Web IDE can connect to the board.
 
 ### Espruino Web IDE
-The Espruino Web IDE can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo). The first time we have to connect the board with the USB connector. Later, when we [connect the board to the WiFi](http://www.espruino.com/Reference#Wifi) network, we can remove the USB cable and we can program the board over WiFi. There are multiple [options](http://www.espruino.com/Saving) to run the program when the board starts, the option that works fine for me is the `Save on send` [option](http://www.espruino.com/Saving#save-on-send) `Direct to Flash`.
-- The web site contains an extensive [API reference](http://www.espruino.com/Reference#software). 
-- I added some IoT related [examples](./src) to this workshop material.
+The Espruino Web IDE can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo). The first time we have to connect the board with the USB connector. Later, when we [connect the board to the WiFi](http://www.espruino.com/Reference#Wifi) network, we can remove the USB cable and we can program the board over WiFi.
 
 ### MQTT
-[MQTT](https://en.wikipedia.org/wiki/MQTT) is the protocol of the Internet of Things. 
+[MQTT](https://en.wikipedia.org/wiki/MQTT) is the protocol of the Internet of Things. We will use it to publish `telemetry` and `status` data and to send `command`s.
 
 Highlights of the MQTT protocol:
 - It's a publish /subscribe mechanism with a broker and multiple clients. Our microcontrollers will be clients.
-- Publishers publish messages in topics. The topic name can contain slashes to organize it. Example: `evision/restaurant/thing-id/telemetry/climate`.
-- Subscribers subcribe to topics. They can subscribe to specific topics, and they can use wildcards. Example `evision/restaurant/+/telemetry/#`, where `+` is a one level wildcard and `#` is a multiple level wildcard.
+- Publishers publish messages in topics. The topic name can contain slashes to organize it. Examples:
+  - `evision/restaurant/thing-id1/status`
+  - `evision/restaurant/thing-id1/telemetry/climate`
+  - `evision/restaurant/thing-id1/telemetry/presence`
+
+- Subscribers subcribe to topics. They can subscribe to specific topics, and they can use wildcards where `+` is a one level wildcard and `#` is a multiple level wildcard. Examples:
+  - `evision/restaurant/#` - get all data (this is a lot!)
+  - `evision/restaurant/thing-id1/telemetry/presence` - get the presence telemetry data from `thing-id1`.
+  - `evision/restaurant/thing-id1/telemetry/#` - get all telemetry data from `thing-id1`.
+  - `evision/restaurant/+/telemetry/#` - get all telemetry data
+  
 - The protocol has built in Quality of Service which provides a guarantee that messages are delived.
   - QoS 0 - At most once.
   - QoS 1 - At least once.
@@ -43,19 +54,22 @@ Highlights of the MQTT protocol:
 - It is possible to publish retained messages. The broker will always keep that message and send it when a scubcriber subscribes to the topic. We will use this for our status messages (`online`, `offline`).
 - There is a Last Will and Testament feature. When a client is ungracefully disconnected from the server, then the broker will send this message. We will use this to publish the status `offline`.
 
+The format of our messages is [JSON](https://en.wikipedia.org/wiki/JSON).
+
 We will use the [mosquitto](https://mosquitto.org/) MQTT broker and we will install it on a [Raspberry Pi](https://www.raspberrypi.org/). 
 
 ### MQTTLens
-MQTTLens can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=nl). It can connect to an MQTT broker and is able to subscribe and publish to MQTT topics. We can use it to test the behaviour of our microcontrollers. I run into a lay-out issue when the message payload is [JSON](https://en.wikipedia.org/wiki/JSON). Work around is making the window smaller. :-/
+MQTTLens can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=nl). It can connect to an MQTT broker and is able to subscribe and publish to MQTT topics. We can use it to test the behaviour of our microcontrollers.
+
+### Node-RED
+TODO
+We will use Node-RED to gather all our  data.
+
+### Data
+TODO
 
 ## Exploring sensors with the Widora Air
 ### About the Widora Air:
-- [Data sheet](http://wiki.widora.cn/_media/air-spec.pdf)
-- Based on [ESP32](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf).
-- Exposes all pins of the ESP32, see [pinout](./docs/pinouts/Widora%20Air).
-- Continuously rebooting after flashing Espruino on a brand new board can be resolved first flash something using Arduino, then Espruino.
-- The DAC pins do [not](http://forum.espruino.com/conversations/328147) work in Espruino.
-- https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
 
 
 ## Digital input and output with a Sonoff Basic
@@ -76,12 +90,6 @@ Demonstrates the usage of digital inputs ([button](https://www.espruino.com/Butt
 }
 ```
 
-### About the Sonoff Basic:
-- It is a [Wifi smart switch](https://sonoff.itead.cc/en/products/sonoff/sonoff-basic).
-- Based on [ESP8266](https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf).
-- A hackable device, but does not expose all pins of the ESP8266, see [pinout](./docs/pinouts/Sonoff%20Basic)
-- https://randomnerdtutorials.com/how-to-flash-a-custom-firmware-to-sonoff/
-- The on-board LED is turned on with the value `false`(!).
 
 
 ## Analog input and output with an ESP-12E
@@ -103,10 +111,6 @@ Demonstrates the usage of analog inputs (a photo resistor = light sensor) and ou
   "light":0.8251953125
 }
 ```
-About the ESP-12E
-- Based on [ESP8266](https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf).
-- Exposes all pins of the ESP8266, see [pinout](./docs/pinouts/ESP-12E).
-- The on-board LED is turned on with the value `false`(!).
   
 ---
 ### Things to do
@@ -123,10 +127,6 @@ About the ESP-12E
 
 ### Notes to self:
 #### Troubleshooting
-  - Error while uploading script: `Uncaught Error: Unable to find or create file` can be resoled by `require('Storage').eraseAll()`.
-  - Code which causes the board not to respond can be erased by clearing all memory, see flashing folder.
-  - Problems installing the prolific driver for the old FTDI cable can be [resolved](http://www.totalcardiagnostics.com/support/Knowledgebase/Article/View/92/20/prolific-usb-to-serial-fix-official-solution-to-code-10-error).
-  - Reading the state of a digital pin with `digitalRead` does not always work when the pin is used as an output pin by `digitalWrite`, resolution: keep track of the current state using a variable.
 
 #### Ideas
   - [ ] Alternative for uploading: https://www.npmjs.com/package/espruino

@@ -14,7 +14,7 @@ The  things are there to stay and they will gather tons of data. We can use it t
 ## Getting started
 
 ### Sensors and actuators
-The primary focus is on installing [sensors](https://en.wikipedia.org/wiki/Sensor) to gather information about the restaurant. We may also want to add an [actuator](https://en.wikipedia.org/wiki/Actuator) here and there. It should be OK, as long as we don't disturb people during ther lunch break. Have a look at the descriptions of the available [sensors](./docs/Sensors.md) and [actuators](./docs/Sensors.md). And again: `primary focus === sensors`!
+The primary focus is on installing [sensors](https://en.wikipedia.org/wiki/Sensor) to gather information about the restaurant. We may also want to add an [actuator](https://en.wikipedia.org/wiki/Actuator) here and there. It should be OK, as long as we don't disturb people during their lunch break. Have a look at the descriptions of the available [sensors](./docs/Sensors.md) and [actuators](./docs/Sensors.md). And again: `primary focus === sensors`!
 
 #### Ideas
 - Next to the components we already have we can tinker with existing electronic devices to use their sensors and actuators!
@@ -68,59 +68,13 @@ We will use Node-RED to gather all our  data.
 ### Data
 TODO
 
-## Exploring sensors with the Widora Air
-### About the Widora Air:
 
-
-## Digital input and output with a Sonoff Basic
-Demonstrates the usage of digital inputs ([button](https://www.espruino.com/Button)) and outputs (relays and onboard LED).
-<br/><br/>
-### MQTT `command` payloads:
- - `{"name": "blinkOn"}` - starts blinking the on-board LED.
- - `{"name": "blinkOff"}` - stops blinking the on-board LED. 
-<br/><br/>
- - `{"name": "turnOn"}` - turns the relay on. 
- - `{"name": "turnOff"}` - turns the relay off. 
- - `{"name": "toggle"}` - toggles the relay. 
-### Published `telemetry`, every 30 seconds:
-``` json
-{
-  "freeMemory":640,
-  "rssi":-64
-}
-```
-## Analog input and output with an ESP-12E
-Demonstrates the usage of analog inputs (a photo resistor = light sensor) and outputs (an LED which is being dimmed).
-<br/><br/>
-### MQTT `command` payloads:
- - `{"name": "blinkOn"}` - starts blinking the on-board LED.
- - `{"name": "blinkOff"}` - stops blinking the on-board LED. 
-<br/><br/>
- - `{"name": "autoDimOn"}` - turns on auto dimming *(dimming of the LED based on the value of the light sensor)*. 
- - `{"name": "autoDimOff"}` - turns off auto dimming. 
- - `{"name": "dim", "value": 0.5}` - dims the LED with the provided value of 0 to 1. 
-
-### Published `telemetry`, every 5 seconds:
-``` json
-{
-  "freeMemory":640,
-  "rssi":-64,
-  "light":0.8251953125
-}
-```
   
 ---
 ### Things to do
-  - [ ] Setup a WiFi network, preferably dedicated for the project.
-  - [ ] Setup an MQTT server.
-  - [ ] Setup a database.
   - [ ] Setup one or more Node-red instances. They should use a GitHub repository.
     - [ ] Add flows to store `telemetry`, `status`, and `command` messages.
       - [ ] Add a timestamp
-  - [ ] I did a test to see if a switch could be connected using a long network cable. It works, but does it also work for more complex modules like the DHT-22 (temperature, humidity) or HC-SR04 (ultrasonic sound sensor)?
-    - http://www.home-automation-community.com/temperature-and-humidity-from-am2302-dht22-sensor-displayed-as-chart/
-    - https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf
-    -   https://www.tinytronics.nl/shop/nl/spanning-converters/level-converters/spi-i2c-uart-bi-directionele-logic-level-converter-4-kanaals
 
 ### Notes to self:
 #### Troubleshooting

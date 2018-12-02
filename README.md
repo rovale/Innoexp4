@@ -7,7 +7,7 @@ Before we know what to do we first need to measure stuff. We will create things 
 The things will see everything.
 - Which door is opened or closed?
 - Is there much activity is there around the salad bar?
-- What’s the air quality around the tosti machine?
+- What’s the air quality around the toaster?
 - ...and much more.
 
 The  things are there to stay and they will gather tons of data. We can use it to analyze trends. ETL it. Use it for dashboards. Maybe for some AI to tell us what to do next…
@@ -41,7 +41,7 @@ Highlights of the MQTT protocol:
   - `evision/restaurant/thing-id1/telemetry/climate`
   - `evision/restaurant/thing-id1/telemetry/presence`
 
-- Subscribers subcribe to topics. They can subscribe to specific topics, and they can use wildcards where `+` is a one level wildcard and `#` is a multiple level wildcard. Examples:
+- Subscribers subscribe to topics. They can subscribe to specific topics, and they can use wildcards where `+` is a one level wildcard and `#` is a multiple level wildcard. Examples:
   - `evision/restaurant/#` - get all data (this is a lot!)
   - `evision/restaurant/thing-id1/telemetry/presence` - get the presence telemetry data from `thing-id1`.
   - `evision/restaurant/thing-id1/telemetry/#` - get all telemetry data from `thing-id1`.
@@ -51,7 +51,7 @@ Highlights of the MQTT protocol:
   - QoS 0 - At most once.
   - QoS 1 - At least once.
   - QoS 2 - Exactly once.
-- It is possible to publish retained messages. The broker will always keep that message and send it when a scubcriber subscribes to the topic. We will use this for our status messages (`online`, `offline`).
+- It is possible to publish retained messages. The broker will always keep that message and send it when a subscriber subscribes to the topic. We will use this for our status messages (`online`, `offline`).
 - There is a Last Will and Testament feature. When a client is ungracefully disconnected from the server, then the broker will send this message. We will use this to publish the status `offline`.
 
 The format of our messages is [JSON](https://en.wikipedia.org/wiki/JSON).
@@ -59,7 +59,7 @@ The format of our messages is [JSON](https://en.wikipedia.org/wiki/JSON).
 We will use the [mosquitto](https://mosquitto.org/) MQTT broker and we will install it on a [Raspberry Pi](https://www.raspberrypi.org/). 
 
 ### MQTTLens
-MQTTLens can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=nl). It can connect to an MQTT broker and is able to subscribe and publish to MQTT topics. We can use it to test the behaviour of our microcontrollers.
+MQTTLens can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=nl). It can connect to an MQTT broker and is able to subscribe and publish to MQTT topics. We can use it to test the behavior of our microcontrollers.
 
 ### Node-RED
 TODO
@@ -89,9 +89,6 @@ Demonstrates the usage of digital inputs ([button](https://www.espruino.com/Butt
   "rssi":-64
 }
 ```
-
-
-
 ## Analog input and output with an ESP-12E
 Demonstrates the usage of analog inputs (a photo resistor = light sensor) and outputs (an LED which is being dimmed).
 <br/><br/>

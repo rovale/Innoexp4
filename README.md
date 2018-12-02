@@ -68,18 +68,9 @@ We will use Node-RED to gather all our  data.
 ### Data
 TODO
 
-
-  
 ---
 ### Things to do
   - [ ] Setup one or more Node-red instances. They should use a GitHub repository.
     - [ ] Add flows to store `telemetry`, `status`, and `command` messages.
       - [ ] Add a timestamp
-
-### Notes to self:
-#### Troubleshooting
-
-#### Ideas
-  - [ ] Alternative for uploading: https://www.npmjs.com/package/espruino
-  - [ ] `analogWrite(D5, 0.5, { freq : 1 })` also blinks an LED.
 

@@ -90,7 +90,58 @@ Next to define:<br>
 **Build the thing**
 
 - [ ] Write the code. *Get some help from the code examples.*
-- [ ] Create a PR for every `Thing` story. *Beware it's a public repository: don't share any sensitive data, like passwords.*
+- [ ] Create a PR for every 'Thing' story. *Beware it's a public repository: don't share any sensitive data, like passwords.*
 - [ ] Deploy the code on the microcontroller.
 - [ ] Test it!
 - [ ] Install it in the physical location!
+
+## Story: Prepare network infrastructure
+- Prepare a WiFi network 
+  - [ ] To be used by 
+    - [ ] Our things
+    - [ ] Our server
+    - [ ] Our laptops
+  - [ ] It should have internet access.
+  - [ ] Can we use the existing WiFi infrastructure?
+    - [ ] It is likely that we cannot secure our microcontrollers. *To be investigated.*
+    - [ ] Would it help if we create a separate network for our things?
+    - [ ] Maybe use a router with the guest network as WAN?
+- [ ] What else to take into consideration?
+
+## Story: Prepare a server
+- [ ] Use a Raspberry PI 
+- [ ] It should be close to the TV so whe can possibly project a real life dashboard.
+- [ ] It should be in a safe place. *Can we put it under the ceiling?*
+- [ ] It should have an external HDD for the data we will gather.
+- [ ] What else to take into consideration?
+
+## Story: Install Mosquitto MQTT server
+- [ ] It should be installed on the Raspberry PI.
+- [ ] It should have password protection, no SSL, default port 1883.
+- [ ] It should start the service at startup.
+- [ ] What else to take into consideration?
+
+## Story: Install Node-RED
+- [ ] It should be installed on the Raspberry PI.
+- [ ] It should start the service at startup.
+- [ ] It should have password protection, no SSL, default port 1880.
+- [ ] It should use a GitHub repository for the flows.
+- [ ] It should add a flow with an HTTP node which serves the settings of our things.
+- [ ] What else to take into consideration?
+
+## Story: Store the data
+- [ ] Choose what database to use.
+  - [ ] Consider how to cope with LOTS of data. *Maybe sharding / partitioning?*
+- [ ] It should be installed on the Raspberry PI.
+- [ ] Create a Node-RED flow to store all data published to the MQTT server:
+  - [ ] `status` messages
+  - [ ] `telemetry` messages
+  - [ ] `command` messages
+- [ ] It should store
+  - [ ] A timestamp
+  - [ ] The entire topic name
+  - [ ] The JSON payload
+
+## Enhancement story: Node-RED dashboard
+- [ ] It should show the status of our things, online / offline.
+- [ ] It should show some graphics of telemetry data.

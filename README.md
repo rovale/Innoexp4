@@ -6,7 +6,7 @@ Before we know what to do we first need to measure stuff. We will create things 
 
 The things will see everything.
 - Which door is opened or closed?
-- Is there much activity is there around the salad bar?
+- How much activity is there around the salad bar?
 - What’s the air quality around the toaster?
 - ...and much more.
 

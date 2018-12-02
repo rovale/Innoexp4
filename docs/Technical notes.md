@@ -56,6 +56,7 @@ Available [sensors](../docs/Sensors.md) and [actuators](../docs/Sensors.md).
   - Code which causes the board not to respond can be erased by clearing all memory, see [flashing](../flashing) folder.
   - Error while uploading script: `Uncaught Error: Unable to find or create file` can be resoled by `require('Storage').eraseAll()`.
   - Reading the state of a digital pin with `digitalRead` does not always work when the pin is used as an output pin by `digitalWrite`, resolution: keep track of the current state using a variable.
+  - I prefer to edit code in Visual Studio Code, then I upload the code with the Espruino Web IDE. We can also use [this](https://www.npmjs.com/package/espruino). Did not have time to look into it.
 
 ## MQTT
 

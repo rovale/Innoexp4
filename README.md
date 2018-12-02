@@ -14,7 +14,7 @@ The  things are there to stay and they will gather tons of data. We can use it t
 ## Getting started
 
 ### Sensors and actuators
-The primary focus is on installing [sensors](https://en.wikipedia.org/wiki/Sensor) to gather information about the restaurant. We may also want to add an [actuator](https://en.wikipedia.org/wiki/Actuator) here and there. It should be OK, as long as we don't disturb people during their lunch break. Have a look at the descriptions of the available [sensors](./docs/Sensors.md) and [actuators](./docs/Sensors.md). And again: `primary focus === sensors`!
+The primary focus is on installing [sensors](https://en.wikipedia.org/wiki/Sensor) to gather information about the restaurant. We may also want to add an [actuator](https://en.wikipedia.org/wiki/Actuator) here and there. It should be OK, as long as we don't disturb people during their lunch break. Have a look at the descriptions of the available [sensors](./docs/Sensors.md) and [actuators](./docs/Actuators.md). And again: `primary focus === sensors`!
 
 #### Ideas
 - Next to the components we already have we can tinker with existing electronic devices to use their sensors and actuators!
@@ -62,15 +62,7 @@ We will use the [mosquitto](https://mosquitto.org/) MQTT broker and we will inst
 MQTTLens can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=nl). It can connect to an MQTT broker and is able to subscribe and publish to MQTT topics. We can use it to test the behavior of our microcontrollers.
 
 ### Node-RED
-TODO
-We will use Node-RED to gather all our  data.
+We will use Node-RED to gather all our  data. As a bonus we can use it to display a dashboard.
 
 ### Data
-TODO
-
----
-### Things to do
-  - [ ] Setup one or more Node-red instances. They should use a GitHub repository.
-    - [ ] Add flows to store `telemetry`, `status`, and `command` messages.
-      - [ ] Add a timestamp
-
+This is what we will gather, the more, the better.

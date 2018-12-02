@@ -5,7 +5,7 @@ const settings = {
   mqttUsername: null,
   mqttPassword: null,
   topic: 'mybuilding/mylocation/',
-  id: getSerial().replace('-', '').toUpperCase()
+  id: getSerial().split('-')[1]
 };
 
 exports.settings = settings;

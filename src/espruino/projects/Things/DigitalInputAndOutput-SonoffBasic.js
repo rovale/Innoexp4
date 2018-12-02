@@ -89,7 +89,7 @@ function start() {
       isTurnedOn: isTurnedOn
     };
 
-    mqttClient.publish(getTopic('telemetry'), JSON.stringify(telemetry), 1);
+    mqttClient.publish(getTopic('telemetry/thing'), JSON.stringify(telemetry), 1);
   };
 
   const blinkOn = () => {

@@ -84,13 +84,18 @@ function start() {
   });
 
   const sendTelemetry = () => {
-    const telemetry = {
+    let telemetry = {
       freeMemory: process.memory().free,
-      rssi: wifi.getDetails().rssi,
+      rssi: wifi.getDetails().rssi
+    };
+
+    mqttClient.publish(getTopic('telemetry/thing'), JSON.stringify(telemetry), 1);
+
+    telemetry = {
       light: analogRead(sensorPin)
     };
 
-    mqttClient.publish(getTopic('telemetry'), JSON.stringify(telemetry), 1);
+    mqttClient.publish(getTopic('telemetry/sensor'), JSON.stringify(telemetry), 1);
   };
 
   const blinkOn = () => {
@@ -140,7 +145,7 @@ function start() {
       true
     );
 
-    telemetryInterval = setInterval(() => sendTelemetry(), 5 * 1000);
+    telemetryInterval = setInterval(() => sendTelemetry(), 30 * 1000);
     sendTelemetry();
   });
 

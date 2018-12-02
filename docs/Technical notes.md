@@ -49,15 +49,15 @@ Available [sensors](../docs/Sensors.md) and [actuators](../docs/Sensors.md).
 
 ## Espruino Web IDE
 - [API reference](http://www.espruino.com/Reference#software).
-- TODO: modules. 
-- I created some IoT related [examples](../src).
+- I created some pretty useful [examples](../src).
+- Espruino uses [modules](https://www.espruino.com/Modules). We can create a central place to host a `shared.js` module with settings that all things can use. I added a this to the 'Node-RED' story.
 - There are multiple [options](http://www.espruino.com/Saving) to run the program when the board starts. The option that works fine for me is the `Save on send` [option](http://www.espruino.com/Saving#save-on-send) `Direct to Flash`.
 - Random notes
   - Code which causes the board not to respond can be erased by clearing all memory, see [flashing](../flashing) folder.
   - Error while uploading script: `Uncaught Error: Unable to find or create file` can be resoled by `require('Storage').eraseAll()`.
   - Reading the state of a digital pin with `digitalRead` does not always work when the pin is used as an output pin by `digitalWrite`, resolution: keep track of the current state using a variable.
   - I prefer to edit code in Visual Studio Code, then I upload the code with the Espruino Web IDE. We can also use [this](https://www.npmjs.com/package/espruino). Did not have time to look into it.
-  - `analogWrite(D5, 0.5, { freq : 1 })` also blinks an LED.
+  - Nice to try: `analogWrite(D5, 0.5, { freq : 1 })` also blinks an LED.
 
 ## Things
   - I did a test to see if a switch could be connected using a long network cable. It works, but does it also work for more complex modules like the DHT-22 (temperature, humidity) or HC-SR04 (ultrasonic sound sensor)? Some references:

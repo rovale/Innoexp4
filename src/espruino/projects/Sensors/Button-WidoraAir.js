@@ -8,7 +8,6 @@ setInterval(() => {
   print(value);
 }, 1000);
 
-
 //Note: not every pin supports setWatch.
 setWatch((e) => {
   console.log("Button pressed");

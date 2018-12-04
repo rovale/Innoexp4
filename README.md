@@ -1,4 +1,5 @@
 # INNOEXP v4 IoT
+![Technology](./docs/pitch/Technology.png)
 
 ## Our Goal
 

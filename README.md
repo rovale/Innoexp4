@@ -66,3 +66,9 @@ We will use Node-RED to gather all our  data. As a bonus we can use it to displa
 
 ### Data
 This is what we will gather, the more, the better.
+
+## Project
+We will approach this as a real project. I already defined some [tasks and stories](./docs/Tasks%20and%20stories.md). Who is going to be our PM?
+
+## Technical notes
+Although this is a quite technical project, I hope we can focus on functionality as much as possible. Here are some more [technical notes](./docs/Technical%20notes.md).

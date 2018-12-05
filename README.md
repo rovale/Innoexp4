@@ -1,4 +1,5 @@
 # INNOEXP v4 IoT
+
 ![Technology](./docs/pitch/Technology.png)
 
 ## Our Goal
@@ -41,7 +42,7 @@ Espruino ([www.espruino.com](https://www.espruino.com/)) is an open source [Java
 
 ### Espruino Web IDE
 
-The Espruino Web IDE can be installed from the [chrome web store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo). The first time we have to connect the board with the USB connector. Later, when we [connect the board to the WiFi](http://www.espruino.com/Reference#Wifi) network, we can remove the USB cable and we can program the board over WiFi.
+The Espruino Web IDE can be installed from the [Chrome Web Store](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo). The first time we have to connect the board with the USB connector. Later, when we [connect the board to the WiFi](http://www.espruino.com/Reference#Wifi) network, we can remove the USB cable and we can program the board over WiFi.
 
 ### MQTT
 
@@ -78,7 +79,7 @@ MQTTLens can be installed from the [chrome web store](https://chrome.google.com/
 
 ### Node-RED
 
-We will use Node-RED to gather all our  data. As a bonus we can use it to display a dashboard.
+We will use [Node-RED](https://nodered.org/) to gather all our  data. As a bonus we can use it to display a dashboard.
 
 ### Data
 
@@ -91,3 +92,27 @@ We will approach this as a real project. I already defined some [tasks](./docs/T
 ## Technical notes
 
 Although this is quite a technical project, I hope we can focus on functionality as much as possible. Here are some more [technical notes](./docs/Technical%20notes.md).
+
+## Links
+
+### General knowledge
+
+- [Actuator](https://en.wikipedia.org/wiki/Actuator)
+- [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+- [JSON](https://en.wikipedia.org/wiki/JSON)
+- [Microcontroller](https://en.wikipedia.org/wiki/Microcontroller)
+- [Sensor](https://en.wikipedia.org/wiki/Sensor)
+
+### Hardware
+
+- [ESP32](https://en.wikipedia.org/wiki/ESP32)
+- [ESP8266](https://en.wikipedia.org/wiki/ESP8266)
+- [Raspberry Pi](https://www.raspberrypi.org/)
+
+### Software
+
+- [Espruino](https://en.wikipedia.org/wiki/Espruino)
+- [Espruino Web IDE (Chrome Web Store)](https://chrome.google.com/webstore/detail/espruino-web-ide/bleoifhkdalbjfbobjackfdifdneehpo)
+- [Mosquitto](https://mosquitto.org/)
+- [MQTT](https://en.wikipedia.org/wiki/MQTT)
+- [Node-RED](https://nodered.org/)

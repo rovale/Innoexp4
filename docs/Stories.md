@@ -24,7 +24,7 @@ Define:
 - [ ] What to measure? - *Example: is the door open or closed? What is the current temperature? What is the air quality?*
 - [ ] Which sensor(s) to use? - *Examples: the door switch, the temperature/humidity sensor (DHT-22), the air quality sensor (MQ-135)*
 - [ ] When to send the measurements? - *Examples: every time the door opens or closes. Every 5 minutes, around lunch time every 30 seconds*
-- [ ] What should it look like? *Can we hide the sensor, maybe under the ceiling? If we can't hide it what should it look like? Can we make it look good? Is it safe for a restaurant? It should stay there for a while. Can we make it durable?*
+- [ ] What should it look like? *Can we hide the sensor, maybe under the ceiling? If we can't hide it what should it look like? Can we make it look good? Is it safe for a restaurant? It should stay there for a while. Can we make it durable? Please take care we do not damage anything.*
 - [ ] Are there other things to consider?
 - [ ] Share your ideas!
 
@@ -89,7 +89,7 @@ Define:
 - [ ] Do we need an extension cord?
 - [ ] What sensors will it have? *Add references to the 'Sensor' stories.*
 - [ ] How to connect the sensors? *If we need longer wiring cables, does that still work for our sensor? Test it! For the longer wires specify which colors are used for what purpose since they might not have red `+` or black `-`. Be careful!*
-- [ ] What should it look like? *Can we hide it, maybe under the ceiling? If we can't hide it what should it look like? Can we make it look good? Is it safe for a restaurant? It should stay there for a while. Can we make it durable?*
+- [ ] What should it look like? *Can we hide it, maybe under the ceiling? If we can't hide it what should it look like? Can we make it look good? Is it safe for a restaurant? It should stay there for a while. Can we make it durable? Please take care we do not damage anything.*
 - [ ] Are there other things to consider?
 - [ ] Share your ideas!
 

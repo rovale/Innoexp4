@@ -5,10 +5,10 @@
 - [ ] - first define which roles we need, some ideas:
   - Workshop facilitator - person who might know what to Google for - Ronald
   - Project manager - responsible for the PM shizzle - Peter
-  - Electronics supervisor - end responsible for the electronic devices (sensors, things)
-  - Infrastructure supervisor - responsible for setting up required infrastructure (server, WiFi, etc.)
-  - Security supervisor - responsible for the compliance with eVision security regulation.
-  - Presenter - responsible for a kick-ass end presentation - Jurgita(?)
+  - Electronics supervisor - end responsible for the electronic shizzle (sensors, things) - Coen & Marco
+  - Infrastructure supervisor - responsible for setting up required infrastructure (server, WiFi, etc.) - Gerwout & Marco 
+  - Security supervisor - responsible for the compliance with eVision security regulation - Anneke & Gerwout
+  - Presenter - responsible for a kick-ass end presentation - Jurgita (?)
 
 ## Task: Maintain a calendar
 

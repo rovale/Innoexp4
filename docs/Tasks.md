@@ -74,7 +74,7 @@ First draft of the calendar
 
 ## Task: Create a private GitHub repository
 
-- [ ] Name: InnoExp4.IoT
+- [ ] Name: Innoexp4.IoT
 - [ ] Provide permissions for all team members
 
 ## Task: Create a project board

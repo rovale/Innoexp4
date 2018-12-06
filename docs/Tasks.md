@@ -11,9 +11,9 @@
   - Security supervisor ...
   - Quality Assurance ...
   - Technical architect - supervisor of 'Epic story: define the things'
-  - Presenter - making us win this time - Jurgita
+  - Presenter - making us win this time - Jurgita(?)
 
-## Task: Create calendar
+## Task: Maintain a calendar
 
 First draft of the calendar
 
@@ -70,7 +70,7 @@ First draft of the calendar
     - Clean up - presentations start!
   
   - 16:00 - Everybody
-    - Kick some ass - (by Jurgita, supported by us)
+    - Kick some ass - (by Jurgita(?), supported by us)
 
 ## Task: Create a private GitHub repository
 
@@ -89,9 +89,12 @@ First draft of the calendar
 
 - [ ] Get a ladder to look under the ceiling. *Ronald knows where to get it.*
 - [ ] Bring tools right away, since your there.
-- [ ] Make a simple blueprint of the restaurant.
+- [ ] Make a simple blueprint of the restaurant. *We got a measuring tape.*
+  - [ ] Two versions
+    - [ ] Above ceiling level.
+    - [ ] Below ceiling level.
   - [ ] Identify important places. - *Examples: doors, power outlets, tvs, etc* 
-  - [ ] Extend this blueprint with the locations of our things and sensors.
+  - [ ] Later: extend this blueprint with the locations of our things and sensors.
 
 ## Task: Get cables and extension cords
 

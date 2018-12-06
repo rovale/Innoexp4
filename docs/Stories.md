@@ -41,7 +41,7 @@ There are a lot of examples on YouTube.
 
 This might also help: [www.circuito.io](https://www.circuito.io).
 
-Try to make it print the sensor data.
+Try to make it print the sensor data as in `print(digitalRead(D36))`.
 
 Some guidance... just to prevent damage:
 
@@ -56,6 +56,8 @@ Some guidance... just to prevent damage:
 Some documentation
 
 - [How to use a breadboard](https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard)
+- [Must see 1 - The best input and output pins on the NodeMCU ESP32 and ESP8266](https://www.youtube.com/watch?v=c0tMGlJVmkw)
+- [Must see 2 - How To: Pick the right pins on the NodeMCU ESP8266 and ESP32](https://www.youtube.com/watch?v=7h2bE2vNoaY)
 
 Define:
 

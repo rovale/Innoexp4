@@ -4,14 +4,11 @@
 
 - [ ] - first define which roles we need, some ideas:
   - Workshop facilitator - person who might know what to Google for - Ronald
-  - Business analyst - responsibility? - person?
-  - Project manager ....
-  - Electronics supervisor ....
-  - Infrastructure supervisor ....
-  - Security supervisor ...
-  - Quality Assurance ...
-  - Technical architect - supervisor of 'Epic story: define the things'
-  - Presenter - making us win this time - Jurgita(?)
+  - Project manager - responsible for the PM shizzle - Peter
+  - Electronics supervisor - end responsible for the electronic devices (sensors, things)
+  - Infrastructure supervisor - responsible for setting up required infrastructure (server, WiFi, etc.)
+  - Security supervisor - responsible for the compliance with eVision security regulation.
+  - Presenter - responsible for a kick-ass end presentation - Jurgita(?)
 
 ## Task: Maintain a calendar
 
@@ -21,52 +18,43 @@ First draft of the calendar
   - 16:00 - Everybody
     - Kick-off (by Ronald)
 
-  - 16:15 - Optional
-    - Sensors (by Ronald)
+  - 16:15 - Everybody
+    - Knowledge sharing - Explain different kind of sensors and what is the use of it (by Ronald)
 
-  - 16:15/16:30 - Everybody
+  - 16:30 - Everybody
+    - [Brain storming](https://github.com/rovale/Innoexp4/blob/master/docs/Stories.md#epic-story-define-the-sensors)
+    - [Share ideas about sensors and things](https://github.com/rovale/Innoexp4/blob/master/docs/Stories.md#add-stories-for-every-idea) (by everybody)
+  
+  - 17:00 - Everybody
     - Organize project
-    - Start 'Epic story: define the sensors'
-    - Pick up the sensor stories.
-    - Start other tasks and stories which we can already pick up
+	  - Assign  person to each role, this person will lead the responsibility to deliver the assign task per role
 
-  - 17:30 - Optional
-    - Share ideas about sensors (by everybody)
+  - 17:15 - Everybody
+	  - Knowledge sharing - Microcontrollers, connecting sensors, programming (Ronald)
+    - Start hacking!
 
-  - 18:00 - Everybody
+  - 17:55 - Everybody
     - Clean up - dinner is served!
 
-  - 19:00 - Optional
-    - Microcontrollers, connecting sensors, programming (Ronald)
-
-  - 19:30 - Everybody
-    - Spike the sensors
-    - Start 'Epic story: define the things'
-    - Continue other tasks and stories which we can already pick up
-
-  - 20:30 - Optional
-    - Share ideas about things (by everybody)
-
-  - 21:00 (and/or next day) - Optional
-    - MQTT (by Ronald)
-
-  - Somewhere between 21:15 and 23:30 - Everybody still here
-    - Clean up - time and go!
+  - 19:00 - 21:00
+	  - Knowledge sharing - MQTT (by Ronald)
+    - Continue hacking!
 
 - December 7th
   - As soon as we can/want - Everybody
     - Continue with our tasks and stories
-  
-  - 11:45 - 12:00 - Everybody
+	  
+  - 11:55 - 12:00 - Everybody
     - Clean up - it's lunchtime!
-  
-  - 15:00 - Optional
+	
+  - 15:00 - Finalize
+    - All devices should in place 
     - Share what we got! (by everybody)
       - Cool things?
       - Node-RED?
       - Database?
   
-  - 15:45 - Everybody
+  - 15:50 - Everybody
     - Clean up - presentations start!
   
   - 16:00 - Everybody

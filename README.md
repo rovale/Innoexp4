@@ -4,7 +4,9 @@
 
 ## Our Goal
 
-*Make the lunch experience even more amazing than it already is.*
+### *Make the lunch experience even more amazing than it already is.*
+
+## Our Strategy
 
 Before we know what to do we first need to measure stuff. We will create things with lots of sensors, whatever we come up with.
 

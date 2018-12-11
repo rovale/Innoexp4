@@ -33,6 +33,8 @@ unsigned long lastReconnectAttemptAt = 0;
 unsigned long lastSystemMessageAt = 0;
 unsigned long lastTelemetryMessageAt = 0;
 
+bool testPir = false;
+
 void connectToNetwork() {
   delay(10);
   Serial.println();
@@ -82,6 +84,13 @@ void onReceive(char* topic, byte* payload, unsigned int length) {
     else if (commandName == "turnLedOff") {
       turnLedOff();
     }
+    if (commandName == "testPirOn") {
+      testPir = true;
+    }
+    else if (commandName == "testPirOff") {
+      testPir = false;
+      digitalWrite(ledPin, LOW);
+    }    
     else {
       Serial.println("Unknown command.");
     }
@@ -182,7 +191,10 @@ String getActivityMessage() {
 }
 
 void loop() {
-  digitalWrite(ledPin, digitalRead(pirPin));
+  if (testPir) {
+    digitalWrite(ledPin, digitalRead(pirPin));
+  }
+
   unsigned long currentMillis = millis();
 
   if (!client.connected()) {

@@ -2,9 +2,14 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 #include "DHTesp.h"
+#include <Wire.h>
+#include <Adafruit_BMP085.h>
 #include <Secrets.h>
 
 const int ledPin = 5;
+
+const int sdaPin = 21;
+const int sclPin = 22;
 
 const int lightPin = 36;
 const int pirPin = 34;
@@ -22,6 +27,7 @@ const char activityTopic[] =    "evision/restaurant/ssr1/telemetry/activity";
 WiFiClient wiFiClient;
 PubSubClient client(wiFiClient);
 DHTesp dht;
+Adafruit_BMP085 bmp;
 
 unsigned long lastReconnectAttemptAt = 0;
 unsigned long lastSystemMessageAt = 0;
@@ -138,7 +144,10 @@ void setup() {
   pinMode(lightPin, INPUT);
   pinMode(pirPin, INPUT);
   dht.setup(dhtPin, DHTesp::DHT22);
-  
+
+  Wire.begin(sdaPin, sclPin);
+  bmp.begin();
+
   turnLedOn();
   Serial.begin(115200);
   connectToNetwork();
@@ -147,7 +156,7 @@ void setup() {
 }
 
 String getClimateMessage() {
-  StaticJsonBuffer<200> jsonBuffer;
+  StaticJsonBuffer<400> jsonBuffer;
   JsonObject& jsonObject = jsonBuffer.createObject();
   jsonObject["light"] = (float)analogRead(lightPin) / 4096;
   
@@ -155,7 +164,8 @@ String getClimateMessage() {
   
   jsonObject["humidity"] = dhtValues.humidity;
   jsonObject["temperature"] = dhtValues.temperature;
-  
+  jsonObject["temperature2"] = bmp.readTemperature();
+  jsonObject["pressure"] = bmp.readPressure();
   String jsonString;
   jsonObject.printTo(jsonString);
   return jsonString;

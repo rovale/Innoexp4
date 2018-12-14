@@ -9,7 +9,7 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
-#include <Secrets2.h>
+#include <Secrets.h>
 
 const int ledPin = 5;
 
@@ -39,24 +39,6 @@ unsigned long lastSystemMessageAt = 0;
 unsigned long lastTelemetryMessageAt = 0;
 
 bool testPir = false;
-
-void connectToNetwork() {
-  delay(10);
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.print(ssid);
-  
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, wiFiPassword);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.print("connected at address ");
-  Serial.println(WiFi.localIP());
-}
 
 void publish(const char* topic, String message, bool retain){
     Serial.print(topic);
@@ -132,21 +114,38 @@ String getOfflineStatusMessage() {
   return getStatusMessage(false);
 }
 
-boolean connectToMqqtBroker() {  
+boolean connect() {
+  if (WiFi.status() != WL_CONNECTED) {
+    delay(10);
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.print(ssid);
+    
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, wiFiPassword);
+  
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
+    }
+  
+    Serial.print("connected at address ");
+    Serial.println(WiFi.localIP());
+  }
+    
   Serial.print("Connecting to MQTT broker...");
 
   String lastWill = getOfflineStatusMessage();
   char lastWillCharArray[lastWill.length() + 1];
   lastWill.toCharArray(lastWillCharArray, lastWill.length() + 1);
 
-  //if (client.connect(mqttClientId, mqttUsername, mqttPassword, statusTopic, 1, true, lastWillCharArray)) {
-  if (client.connect(mqttClientId, statusTopic, 1, true, lastWillCharArray)) {
+  if (client.connect(mqttClientId, mqttUsername, mqttPassword, statusTopic, 1, true, lastWillCharArray)) {
+  //if (client.connect(mqttClientId, statusTopic, 1, true, lastWillCharArray)) {
     turnLedOff();
     Serial.println("connected");
     publish(statusTopic, getOnlineStatusMessage(), true);
     client.subscribe(commandTopic, 1);
   } else {
-    Serial.println(mqttPassword);
     Serial.print("failed, rc=");
     Serial.println(client.state());
   }
@@ -158,14 +157,14 @@ void setup() {
   pinMode(ledPin, OUTPUT);
   pinMode(lightPin, INPUT);
   pinMode(pirPin, INPUT);
-  dht.setup(dhtPin, DHTesp::DHT22);
+  //dht.setup(dhtPin, DHTesp::DHT22);
 
   Wire.begin(sdaPin, sclPin);
-  bmp.begin();
+  //bmp.begin();
 
   turnLedOn();
+
   Serial.begin(115200);
-  connectToNetwork();
   client.setServer(mqttServer, 1883);
   client.setCallback(onReceive);
 
@@ -204,12 +203,12 @@ String getClimateMessage() {
   JsonObject& jsonObject = jsonBuffer.createObject();
   jsonObject["light"] = (float)analogRead(lightPin) / 4096;
   
-  TempAndHumidity dhtValues = dht.getTempAndHumidity();
+  ///TempAndHumidity dhtValues = dht.getTempAndHumidity();
   
-  jsonObject["humidity"] = dhtValues.humidity;
-  jsonObject["temperature"] = dhtValues.temperature;
-  jsonObject["temperature2"] = bmp.readTemperature();
-  jsonObject["pressure"] = bmp.readPressure();
+  //jsonObject["humidity"] = dhtValues.humidity;
+  //jsonObject["temperature"] = dhtValues.temperature;
+  //jsonObject["temperature2"] = bmp.readTemperature();
+  //jsonObject["pressure"] = bmp.readPressure();
   String jsonString;
   jsonObject.printTo(jsonString);
   return jsonString;
@@ -226,17 +225,13 @@ String getActivityMessage() {
 }
 
 void loop() {
-  if (testPir) {
-    digitalWrite(ledPin, digitalRead(pirPin));
-  }
-
   unsigned long currentMillis = millis();
 
   if (!client.connected()) {
     if (currentMillis - lastReconnectAttemptAt >= 5000) {
       lastReconnectAttemptAt = currentMillis;
 
-      if (connectToMqqtBroker()) {
+      if (connect()) {
         lastReconnectAttemptAt = 0;
       }     
     }
@@ -262,6 +257,10 @@ void loop() {
       publish(climateTopic, getClimateMessage(), false);  
       publish(activityTopic, getActivityMessage(), false);  
     }
+  }
+
+  if (testPir) {
+    digitalWrite(ledPin, digitalRead(pirPin));
   }
 
   ArduinoOTA.handle();    

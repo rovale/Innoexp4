@@ -20,14 +20,14 @@ const int lightPin = 36;
 const int pirPin = 34;
 const int dhtPin = 33;
 
-const char mqttClientId[] =   "Table1";
+const char mqttClientId[] = "Table1";
 
-const char commandTopic[] =   "evision/restaurant/tbl1/command";
+const char commandTopic[] = "evision/restaurant/tbl1/command";
 
-const char statusTopic[] =    "evision/restaurant/tbl1/status";
-const char systemTopic[] =    "evision/restaurant/tbl1/telemetry/system";
-const char climateTopic[] =   "evision/restaurant/tbl1/telemetry/climate";
-const char activityTopic[] =  "evision/restaurant/tbl1/telemetry/activity";
+const char statusTopic[] = "evision/restaurant/tbl1/status";
+const char systemTopic[] = "evision/restaurant/tbl1/telemetry/system";
+const char climateTopic[] = "evision/restaurant/tbl1/telemetry/climate";
+const char activityTopic[] = "evision/restaurant/tbl1/telemetry/activity";
 
 WiFiClient wiFiClient;
 PubSubClient client(wiFiClient);
@@ -131,17 +131,15 @@ String getOfflineStatusMessage()
 
 boolean connect()
 {
-  if (WiFi.status() != WL_CONNECTED)
+  if (!WiFi.isConnected())
   {
     delay(10);
     Serial.println();
     Serial.print("Connecting to ");
     Serial.print(ssid);
 
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, wiFiPassword);
-
-    while (WiFi.status() != WL_CONNECTED)
+    WiFi.reconnect();
+    while (!WiFi.isConnected())
     {
       delay(500);
       Serial.print(".");
@@ -187,6 +185,8 @@ void setup()
   turnLedOn();
 
   Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, wiFiPassword, 0, NULL, false);
   client.setServer(mqttServer, 1883);
   client.setCallback(onReceive);
 

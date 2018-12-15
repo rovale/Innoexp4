@@ -9,7 +9,7 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
-#include <Secrets.h>
+#include <Secrets-oz.h>
 
 const int ledPin = 5;
 
@@ -20,7 +20,7 @@ const int lightPin = 36;
 const int pirPin = 34;
 const int dhtPin = 33;
 
-const char mqttClientId[] = "Table1";
+const char mqttClientId[] = "tbl1";
 
 const char commandTopic[] = "evision/restaurant/tbl1/command";
 
@@ -34,7 +34,8 @@ PubSubClient client(wiFiClient);
 DHTesp dht;
 Adafruit_BMP085 bmp;
 
-unsigned long lastReconnectAttemptAt = 0;
+unsigned long reconnectDelay = 5000;
+unsigned long lastReconnectAttemptAt = reconnectDelay * -1;
 unsigned long lastSystemMessageAt = 0;
 unsigned long lastTelemetryMessageAt = 0;
 
@@ -49,7 +50,13 @@ void publish(const char *topic, String message, bool retain)
   char messageCharArray[message.length() + 1];
   message.toCharArray(messageCharArray, message.length() + 1);
 
-  client.publish(topic, messageCharArray, retain);
+  if (!client.publish(topic, messageCharArray, retain))
+  {
+    Serial.println("Pubish failed, maybe check MQTT_MAX_PACKET_SIZE, patch PubSubClient.h.");
+    Serial.println("https://pubsubclient.knolleary.net/api.html");
+    Serial.print("Message length is ");
+    Serial.println(message.length());
+  }
 }
 
 void onReceive(char *topic, byte *payload, unsigned int length)
@@ -70,14 +77,7 @@ void onReceive(char *topic, byte *payload, unsigned int length)
   {
     String commandName = root["name"];
     Serial.println(commandName);
-    if (commandName == "turnLedOn")
-    {
-      turnLedOn();
-    }
-    else if (commandName == "turnLedOff")
-    {
-      turnLedOff();
-    }
+
     if (commandName == "testPirOn")
     {
       testPir = true;
@@ -129,14 +129,17 @@ String getOfflineStatusMessage()
   return getStatusMessage(false);
 }
 
-boolean connect()
+void connect()
 {
+  unsigned long currentMillis = millis();
+
   if (!WiFi.isConnected())
   {
     delay(10);
     Serial.println();
-    Serial.print("Connecting to ");
+    Serial.print("Connecting to the ");
     Serial.print(ssid);
+    Serial.print(" network");
 
     WiFi.reconnect();
     while (!WiFi.isConnected())
@@ -145,31 +148,36 @@ boolean connect()
       Serial.print(".");
     }
 
-    Serial.print("connected at address ");
+    Serial.println();
+    Serial.print("Connected, ip ");
     Serial.println(WiFi.localIP());
   }
 
-  Serial.print("Connecting to MQTT broker...");
-
-  String lastWill = getOfflineStatusMessage();
-  char lastWillCharArray[lastWill.length() + 1];
-  lastWill.toCharArray(lastWillCharArray, lastWill.length() + 1);
-
-  if (client.connect(mqttClientId, mqttUsername, mqttPassword, statusTopic, 1, true, lastWillCharArray))
+  if (currentMillis - lastReconnectAttemptAt >= reconnectDelay)
   {
-    //if (client.connect(mqttClientId, statusTopic, 1, true, lastWillCharArray)) {
-    turnLedOff();
-    Serial.println("connected");
-    publish(statusTopic, getOnlineStatusMessage(), true);
-    client.subscribe(commandTopic, 1);
-  }
-  else
-  {
-    Serial.print("failed, rc=");
-    Serial.println(client.state());
-  }
+    lastReconnectAttemptAt = currentMillis;
 
-  return client.connected();
+    Serial.print("Connecting to MQTT server ");
+    Serial.println(mqttServer);
+
+    String lastWill = getOfflineStatusMessage();
+    char lastWillCharArray[lastWill.length() + 1];
+    lastWill.toCharArray(lastWillCharArray, lastWill.length() + 1);
+
+    if (client.connect(mqttClientId, statusTopic, 1, true, lastWillCharArray))
+    //if (client.connect(mqttClientId, mqttUsername, mqttPassword, statusTopic, 1, true, lastWillCharArray))
+    {
+      turnLedOff();
+      Serial.println("Connected");
+      publish(statusTopic, getOnlineStatusMessage(), true);
+      client.subscribe(commandTopic, 1);
+    }
+    else
+    {
+      Serial.print("Failed, state is ");
+      Serial.println(client.state());
+    }
+  }
 }
 
 void setup()
@@ -218,6 +226,18 @@ void setup()
   ArduinoOTA.begin();
 }
 
+String getSystemMessage()
+{
+  StaticJsonBuffer<200> jsonBuffer;
+  JsonObject &jsonObject = jsonBuffer.createObject();
+  jsonObject["uptime"] = millis() / 1000;
+  jsonObject["rssi"] = WiFi.RSSI();
+  jsonObject["memory"] = ESP.getFreeHeap();
+  String jsonString;
+  jsonObject.printTo(jsonString);
+  return jsonString;
+}
+
 String getClimateMessage()
 {
   StaticJsonBuffer<400> jsonBuffer;
@@ -252,15 +272,7 @@ void loop()
 
   if (!client.connected())
   {
-    if (currentMillis - lastReconnectAttemptAt >= 5000)
-    {
-      lastReconnectAttemptAt = currentMillis;
-
-      if (connect())
-      {
-        lastReconnectAttemptAt = 0;
-      }
-    }
+    connect();
   }
   else
   {
@@ -269,16 +281,7 @@ void loop()
     if (currentMillis - lastSystemMessageAt >= 60000)
     {
       lastSystemMessageAt = currentMillis;
-
-      StaticJsonBuffer<200> jsonBuffer;
-      JsonObject &jsonObject = jsonBuffer.createObject();
-      jsonObject["uptime"] = currentMillis / 1000;
-      jsonObject["rssi"] = WiFi.RSSI();
-      jsonObject["memory"] = ESP.getFreeHeap();
-      String jsonString;
-      jsonObject.printTo(jsonString);
-
-      publish(systemTopic, jsonString, false);
+      publish(systemTopic, getSystemMessage(), false);
     }
 
     if (currentMillis - lastTelemetryMessageAt >= 30000)

@@ -1,0 +1,7 @@
+{
+    "board": "esp32:esp32:widora-air",
+    "configuration": "FlashFreq=80,UploadSpeed=921600",
+    "port": "COM3",
+    "programmer": "AVRISP mkII",
+    "sketch": "src\\Arduino\\Table1Sensor\\Table1Sensor.ino"
+}
